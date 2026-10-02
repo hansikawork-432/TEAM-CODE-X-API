@@ -1,10 +1,19 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
 import joblib
 from pathlib import Path
 
 app = FastAPI(title="Business Growth Prediction API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://team-code-x-phi.vercel.app"],
+    allow_credentials=False,
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 MODEL_PATH = PROJECT_ROOT / "models" / "gradient_boosting_model.pkl"
@@ -38,3 +47,4 @@ def predict_growth(data: BusinessInput):
         return {"predicted_growth_12m": round(float(prediction), 2)}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+

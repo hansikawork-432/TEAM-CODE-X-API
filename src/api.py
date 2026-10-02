@@ -9,7 +9,10 @@ app = FastAPI(title="Business Growth Prediction API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://team-code-x-phi.vercel.app"],
+    allow_origins=[
+    "https://team-code-x-phi.vercel.app",
+    "http://localhost:5173",
+],
     allow_credentials=False,
     allow_methods=["POST"],
     allow_headers=["Content-Type"],
